@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Grand Oral du Maître : Corrigés et Maîtrise - Emmanuel Boutée</title>
+    <style>
+        :root {
+            --chartres-blue: #0047AB;
+            --bakery-gold: #DAA520;
+            --crust-brown: #5D2E0B;
+            --flour-white: #FCF9F2;
+            --success: #2E7D32;
+            --error: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--flour-white);
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--chartres-blue);
+        }
+
+        .credit-header {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--crust-brown);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--flour-white);
+            padding-bottom: 10px;
+        }
+
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--crust-brown); font-size: 1.6rem; margin: 5px 0; }
+        .location-label { color: var(--chartres-blue); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bakery-gold), var(--chartres-blue));
+            transition: width 0.5s ease;
+        }
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lesson-text {
+            background: #fffdf5;
+            border-left: 6px solid var(--bakery-gold);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        h2 { color: var(--chartres-blue); font-size: 1.4rem; border-bottom: 2px solid var(--bakery-gold); padding-bottom: 5px; margin-top: 0; }
+        
+        .btn {
+            background: var(--crust-brown);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--chartres-blue); transform: translateY(-2px); }
+
+        .quiz-box { background: #f0f4f8; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option:hover { border-color: var(--bakery-gold); background: #fffcf0; }
+        .correct { background: var(--success) !important; color: white; border-color: var(--success) !important; }
+        .wrong { background: var(--error) !important; color: white; border-color: var(--error) !important; opacity: 0.8; pointer-events: none; }
+
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        
+        .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95rem; }
+        .data-table td, .data-table th { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        .data-table th { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="credit-header">Création : Emmanuel Boutée</div>
+    
+    <header>
+        <div class="location-label">⛪ Académie des Chefs d'Entreprise - Chartres</div>
+        <h1>Chapitre 8 : Le Grand Oral du Maître</h1>
+    </header>
+
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- Écran 1 : Introduction -->
+    <div id="screen-intro" class="screen active">
+        <h2>La fournée finale</h2>
+        <div class="lesson-text">
+            <p>Félicitations, futur Maître ! Vous avez traversé les sept piliers de la gestion. Ce dernier chapitre est celui de la <strong>vérification de la cuisson</strong>.</p>
+            <p>Nous allons reprendre les chiffres réels de l'exercice final pour valider votre capacité à poser un diagnostic. À Chartres, on ne laisse jamais un pain sortir du four sans vérifier sa croûte. En gestion, c'est la même chose avec vos calculs.</p>
+        </div>
+        <button class="btn" onclick="goToStep('bilan', 25)">Vérifier le Bilan ➡️</button>
+    </div>
+
+    <!-- Écran 2 : Bilan Fonctionnel -->
+    <div id="screen-bilan" class="screen">
+        <h2>Diagnostic de Solvabilité</h2>
+        <div class="lesson-text">
+            <p>Voici les données de notre bilan de synthèse :</p>
+            <table class="data-table">
+                <tr><th>Actif</th><th>Montant</th><th>Passif</th><th>Montant</th></tr>
+                <tr><td>Immobilisations</td><td>10 000</td><td>Capital</td><td>10 000</td></tr>
+                <tr><td>Stocks</td><td>5 000</td><td>Emprunts</td><td>1 000</td></tr>
+                <tr><td>Clients</td><td>3 000</td><td>Fournisseurs</td><td>9 000</td></tr>
+            </table>
+            <p>Le <strong>Fonds de Roulement (FR)</strong> est de 1 000 €. Le <strong>BFR</strong> est de -1 000 € (une ressource !). La <strong>Trésorerie</strong> est de 2 000 €.</p>
+        </div>
+        <button class="btn" onclick="goToStep('sig', 50)">Analyser les SIG ➡️</button>
+    </div>
+
+    <!-- Écran 3 : SIG -->
+    <div id="screen-sig" class="screen">
+        <h2>Analyse de la Rentabilité</h2>
+        <div class="lesson-text">
+            <p>Passons au compte de résultat de l'entreprise :</p>
+            <ul>
+                <li><strong>Marge commerciale :</strong> -2 300 €</li>
+                <li><strong>Production :</strong> 179 216 €</li>
+                <li><strong>Valeur Ajoutée :</strong> 38 283 €</li>
+                <li><strong>Résultat Net :</strong> -39 774 €</li>
+            </ul>
+            <p>Le diagnostic est sans appel : malgré une belle production, les charges de personnel (80 500 €) ont "brûlé" toute la valeur ajoutée.</p>
+        </div>
+        <button class="btn" onclick="startQuiz()">Passer l'Examen Final 🥐</button>
+    </div>
+
+    <!-- Écran 4 : Quiz -->
+    <div id="screen-quiz" class="screen">
+        <h2>Examen de Maîtrise</h2>
+        <div id="quiz-area" class="quiz-box"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div id="screen-end" class="screen">
+        <div class="lesson-text" style="text-align: center; border-color: var(--success);">
+            <div style="font-size: 5rem;">🥨🎓</div>
+            <h2>Diplôme de Maîtrise Validé !</h2>
+            <p>Vous avez terminé le parcours complet de gestion financière. Votre pétrin est propre et votre comptabilité est carrée.</p>
+            <p><strong>Félicitations de la part d'Emmanuel Boutée.</strong></p>
+            <button class="btn" onclick="location.reload()">Recommencer la formation</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function playFeedback(isCorrect) {
+        if ("vibrate" in navigator) {
+            isCorrect ? navigator.vibrate([100, 50, 100]) : navigator.vibrate([400]);
+        }
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = isCorrect ? 'sine' : 'sawtooth';
+        osc.frequency.setValueAtTime(isCorrect ? 880 : 110, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.5);
+    }
+
+    function goToStep(id, prog) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('progress-fill').style.width = prog + '%';
+        window.scrollTo(0,0);
+    }
+
+    const quizData = [
+        { q: "Comment calcule-t-on le Fonds de Roulement ?", o: ["Capital + Emprunts - Immobilisations", "Stocks + Clients", "Ventes - Achats", "Trésorerie + Fournisseurs"], c: 0, f: "Correct ! Vous avez identifié l'excédent des ressources stables." },
+        { q: "Pourquoi le BFR de -1 000 € est-il une ressource ?", o: ["Car c'est une ressource générée par le cycle court", "Car on n'a plus de farine", "Car les clients nous doivent tout", "Car on oublie le meunier"], c: 0, f: "Exact ! Un BFR négatif signifie que l'exploitation finance la trésorerie." },
+        { q: "Quel élément a causé le déficit de l'entreprise X ?", o: ["Les charges de personnel > Valeur Ajoutée", "Trop de baguettes", "Absence de subventions", "Prix du sel"], c: 0, f: "Bravo ! L'EBE est négatif car les salaires ont dévoré la VA." },
+        { q: "Si la CAF et l'EBE sont négatifs, quel est le risque ?", o: ["Cessation de paiement", "Manque de farine", "Trop de clients", "Besoin d'un nouveau four"], c: 0, f: "Correct ! Sans souffle financier, le moteur s'arrête." }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        loadQuestion();
+        goToStep('quiz', 85);
+    }
+
+    function loadQuestion() {
+        const area = document.getElementById('quiz-area');
+        const data = quizData[currentQuestionIndex];
+        let indices = [0, 1, 2, 3];
+        indices.sort(() => Math.random() - 0.5);
+        let html = `<h3>Question ${currentQuestionIndex + 1} sur 4</h3><p><strong>${data.q}</strong></p>`;
+        indices.forEach(idx => html += `<div class="option" onclick="checkAnswer(${idx}, this)">${data.o[idx]}</div>`);
+        html += `<div id="q-feedback" class="feedback"></div><button id="q-next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Suivant ➡️</button>`;
+        area.innerHTML = html;
+    }
+
+    function checkAnswer(selectedIdx, element) {
+        const data = quizData[currentQuestionIndex];
+        const isCorrect = (selectedIdx === data.c);
+        playFeedback(isCorrect);
+        const fb = document.getElementById('q-feedback');
+        const nextBtn = document.getElementById('q-next-btn');
+        if (isCorrect) {
+            element.classList.add('correct');
+            fb.innerHTML = "✅ " + data.f;
+            fb.style.color = "var(--success)";
+            fb.style.display = "block";
+            nextBtn.style.display = "block";
+            document.querySelectorAll('.option').forEach(o => o.style.pointerEvents = 'none');
+        } else {
+            element.classList.add('wrong');
+            fb.innerHTML = "❌ Mauvais pétrissage... Réessayez !";
+            fb.style.color = "var(--error)";
+            fb.style.display = "block";
+            setTimeout(() => { element.classList.remove('wrong'); }, 1500);
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) loadQuestion();
+        else { goToStep('end', 100); playFeedback(true); }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maîtrise de Gestion : Le Bilan - Emmanuel Boutée</title>
+    <style>
+        :root {
+            --chartres-blue: #0047AB;
+            --bakery-gold: #DAA520;
+            --crust-brown: #5D2E0B;
+            --flour-white: #FCF9F2;
+            --success: #2E7D32;
+            --error: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--flour-white);
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--chartres-blue);
+        }
+
+        .credit-header {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--crust-brown);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--flour-white);
+            padding-bottom: 10px;
+        }
+
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--crust-brown); font-size: 1.6rem; margin: 5px 0; }
+        .location-label { color: var(--chartres-blue); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bakery-gold), var(--chartres-blue));
+            transition: width 0.5s ease;
+        }
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lesson-text {
+            background: #fffdf5;
+            border-left: 6px solid var(--bakery-gold);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        h2 { color: var(--chartres-blue); font-size: 1.4rem; border-bottom: 2px solid var(--bakery-gold); padding-bottom: 5px; margin-top: 0; }
+        h3 { color: var(--crust-brown); font-size: 1.2rem; margin-top: 25px; }
+
+        .btn {
+            background: var(--crust-brown);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--chartres-blue); transform: translateY(-2px); }
+
+        .quiz-box { background: #f0f4f8; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option:hover { border-color: var(--bakery-gold); background: #fffcf0; }
+        .correct { background: var(--success) !important; color: white; border-color: var(--success) !important; }
+        .wrong { background: var(--error) !important; color: white; border-color: var(--error) !important; opacity: 0.8; pointer-events: none; }
+
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        
+        ul { padding-left: 25px; }
+        li { margin-bottom: 12px; }
+        strong { color: var(--crust-brown); }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="credit-header">Création : Emmanuel Boutée</div>
+    
+    <header>
+        <div class="location-label">⛪ Académie des Chefs d'Entreprise - Chartres</div>
+        <h1>Le Bilan : Votre État Patrimonial</h1>
+    </header>
+
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- Écran 1 : Introduction -->
+    <div id="screen-intro" class="screen active">
+        <h2>La Nature du Bilan</h2>
+        <div class="lesson-text">
+            <p>Le bilan est un document comptable de synthèse indispensable à tout Maître Boulanger. Il doit être considéré comme l'<strong>état patrimonial</strong> de votre entreprise à un instant précis.</p>
+            <p>Pour piloter votre fournil de Chartres, imaginez que vous preniez une <strong>photographie financière</strong> de votre patrimoine. Ce document se divise en deux colonnes qui doivent toujours être en équilibre :</p>
+            <ul>
+                <li><strong>L'ACTIF :</strong> Situé à gauche, il recense tout ce que le fournil possède. Ce sont vos cartes stratégiques et vos ressources.</li>
+                <li><strong>LE PASSIF :</strong> Situé à droite, il indique d'où vient l'argent de l'entreprise. Ce sont vos dettes et les obligations envers vos partenaires.</li>
+            </ul>
+            <p>L'équilibre est la règle d'or : le total de l'Actif est toujours strictement égal au total du Passif.</p>
+        </div>
+        <button class="btn" onclick="goToStep('actif', 33)">Découvrir l'Actif du Fournil ➡️</button>
+    </div>
+
+    <!-- Écran 2 : L'Actif -->
+    <div id="screen-actif" class="screen">
+        <h2>L'Actif et la Liquidité</h2>
+        <div class="lesson-text">
+            <p>À gauche du bilan, les éléments sont classés selon le principe de <strong>liquidité croissante</strong>. Plus on descend dans la liste, plus l'élément peut être transformé rapidement en argent liquide pour honorer un paiement.</p>
+            
+            <h3>Les Immobilisations</h3>
+            <p>Ce sont vos possessions durables nécessaires à la production. À Chartres, cela comprend votre droit au bail place des Épars, votre four à sole, votre pétrin et votre camionnette de livraison. Ils restent dans l'entreprise plusieurs années.</p>
+
+            <h3>Les Stocks</h3>
+            <p>C'est l'essence même de votre métier : votre farine de Beauce, votre levure et vos produits finis comme les baguettes de tradition et les viennoiseries déjà cuites.</p>
+
+            <h3>Les Créances et la Trésorerie</h3>
+            <p>Les créances clients sont les factures que les hôteliers de la ville ne vous ont pas encore payées. Enfin, tout en bas, se trouve votre trésorerie disponible immédiatement en banque ou dans votre caisse.</p>
+        </div>
+        <button class="btn" onclick="goToStep('passif', 66)">Découvrir le Passif et les Dettes ➡️</button>
+    </div>
+
+    <!-- Écran 3 : Le Passif -->
+    <div id="screen-passif" class="screen">
+        <h2>Le Passif et l'Exigibilité</h2>
+        <div class="lesson-text">
+            <p>À droite du bilan, le passif montre l'origine des fonds. Il est classé par <strong>exigibilité croissante</strong> : ce que vous devez rembourser le plus vite se trouve tout en bas.</p>
+
+            <h3>Le Capital et les Emprunts</h3>
+            <p>Le capital est l'argent que vous avez apporté pour démarrer votre projet chartrain. Les emprunts sont vos dettes bancaires à long terme contractées pour acheter votre matériel.</p>
+
+            <h3>Les Dettes d'Exploitation</h3>
+            <p>Ce sont les sommes dues au meunier pour la farine, les salaires à verser à vos apprentis ou les cotisations sociales dues à l'Urssaf. Ces tiers attendent d'être payés rapidement.</p>
+
+            <h3>Le Découvert Bancaire</h3>
+            <p>C'est la dette la plus <strong>urgente</strong>. Elle figure tout en bas du passif car elle doit être remboursée immédiatement à la banque pour éviter les frais et les agios.</p>
+        </div>
+        <button class="btn" onclick="startQuiz()">Passer l'Examen de Maîtrise 🥐</button>
+    </div>
+
+    <!-- Écran 4 : Quiz -->
+    <div id="screen-quiz" class="screen">
+        <h2>Examen du Chapitre 2</h2>
+        <div id="quiz-area" class="quiz-box"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div id="screen-end" class="screen">
+        <div class="lesson-text" style="text-align: center; border-color: var(--success);">
+            <div style="font-size: 5rem;">🏆🥖</div>
+            <h2>Maîtrise Validée !</h2>
+            <p>Félicitations, Chef ! Le Chapitre 2 est acquis. Emmanuel Boutée vous confirme que vous maîtrisez désormais l'analyse du patrimoine de votre future boulangerie.</p>
+            <button class="btn" onclick="location.reload()">Recommencer la Leçon</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- NOUVEAU : MOTEUR SENSORIEL (SON ET VIBRATIONS) ---
+    function playFeedback(isCorrect) {
+        // 1. Vibrations (compatibilité assurée pour les smartphones modernes)
+        if ("vibrate" in navigator) {
+            if (isCorrect) {
+                navigator.vibrate([100, 50, 100]); // Double vibration positive
+            } else {
+                navigator.vibrate([400]); // Longue vibration d'erreur
+            }
+        }
+
+        // 2. Génération de son via Web Audio API (sans fichier mp3 !)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (isCorrect) {
+            // Son de succès : "Ding" du four
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // Note Do
+            oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.1); // Monte vers le Do aigu
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.4);
+        } else {
+            // Son d'erreur : bourdonnement grave
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    // --- NAVIGATION ---
+    function goToStep(id, prog) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('progress-fill').style.width = prog + '%';
+        window.scrollTo(0,0);
+    }
+
+    // --- DONNÉES DU QUIZ ---
+    const quizData = [
+        {
+            q: "Quelle est la définition précise du Bilan pour votre boulangerie ?",
+            o: [
+                "Un catalogue des prix affichés en vitrine",
+                "Un document présentant l'état du patrimoine à un instant T",
+                "Un planning de production pour les apprentis",
+                "Un relevé des ventes de la semaine dernière"
+            ],
+            c: 1,
+            f: "Correct ! Le bilan fige la situation du patrimoine à une date donnée."
+        },
+        {
+            q: "Dans quel poste de l'ACTIF se trouve votre nouveau four à pain ?",
+            o: [
+                "Dans les Stocks de marchandises",
+                "Dans la Trésorerie disponible",
+                "Dans les Immobilisations durables",
+                "Dans les Dettes fournisseurs"
+            ],
+            c: 2,
+            f: "Exact ! Le matériel utilisé sur plusieurs années est une immobilisation."
+        },
+        {
+            q: "Que signifie le principe de 'liquidité croissante' à l'Actif ?",
+            o: [
+                "Le classement du moins disponible au plus disponible en cash",
+                "L'ordre de péremption des pâtisseries en magasin",
+                "La quantité d'eau utilisée pour la pâte à pain",
+                "Le classement alphabétique des fournisseurs de farine"
+            ],
+            c: 0,
+            f: "Bravo ! On descend du plus 'bloqué' (le four) vers le cash (la caisse)."
+        },
+        {
+            q: "Quelle est la dette la plus 'exigible' (urgente) au Passif ?",
+            o: [
+                "L'apport en capital initial du patron",
+                "L'emprunt pour les travaux sur 15 ans",
+                "Le découvert bancaire immédiat",
+                "La subvention reçue de la région"
+            ],
+            c: 2,
+            f: "C'est juste ! Le découvert est en bas car il doit être comblé sans délai."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        loadQuestion();
+        goToStep('quiz', 85);
+    }
+
+    function loadQuestion() {
+        const area = document.getElementById('quiz-area');
+        const data = quizData[currentQuestionIndex];
+        
+        let indices = [0, 1, 2, 3];
+        indices.sort(() => Math.random() - 0.5);
+
+        let html = `<h3>Question ${currentQuestionIndex + 1} sur ${quizData.length}</h3>`;
+        html += `<p style="font-size:1.1rem; margin-bottom:20px;"><strong>${data.q}</strong></p>`;
+        
+        indices.forEach(idx => {
+            html += `<div class="option" onclick="checkAnswer(${idx}, this)">${data.o[idx]}</div>`;
+        });
+        
+        html += `<div id="q-feedback" class="feedback"></div>`;
+        html += `<button id="q-next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Passer à la suite ➡️</button>`;
+        
+        area.innerHTML = html;
+    }
+
+    function checkAnswer(selectedIdx, element) {
+        const data = quizData[currentQuestionIndex];
+        const fb = document.getElementById('q-feedback');
+        const nextBtn = document.getElementById('q-next-btn');
+
+        if (selectedIdx === data.c) {
+            playFeedback(true); // Déclenche le son et la vibration de succès
+            element.classList.add('correct');
+            fb.innerHTML = "✅ " + data.f;
+            fb.style.color = "var(--success)";
+            fb.style.display = "block";
+            nextBtn.style.display = "block";
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+        } else {
+            playFeedback(false); // Déclenche le son et la vibration d'erreur
+            element.classList.add('wrong');
+            fb.innerHTML = "❌ Mauvais pétrissage... Réfléchissez et cherchez la bonne réponse !";
+            fb.style.color = "var(--error)";
+            fb.style.display = "block";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            goToStep('end', 100);
+            playFeedback(true); // Petit bonus de victoire à la fin !
+        }
+    }
+</script>
+</body>
+</html>

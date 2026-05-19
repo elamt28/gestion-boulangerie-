@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Emmanuel Boutée : Chapitre 4 - Le Compte de Résultat</title>
+    <style>
+        :root {
+            --chartres-blue: #0047AB;
+            --bakery-gold: #DAA520;
+            --crust-brown: #5D2E0B;
+            --flour-white: #FCF9F2;
+            --success: #2E7D32;
+            --error: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--flour-white);
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--chartres-blue);
+        }
+
+        .credit-header {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--crust-brown);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--flour-white);
+            padding-bottom: 10px;
+        }
+
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--crust-brown); font-size: 1.6rem; margin: 5px 0; }
+        .location-label { color: var(--chartres-blue); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bakery-gold), var(--chartres-blue));
+            transition: width 0.5s ease;
+        }
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lesson-text {
+            background: #fffdf5;
+            border-left: 6px solid var(--bakery-gold);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        h2 { color: var(--chartres-blue); font-size: 1.4rem; border-bottom: 2px solid var(--bakery-gold); padding-bottom: 5px; margin-top: 0; }
+        h3 { color: var(--crust-brown); font-size: 1.2rem; margin-top: 25px; }
+
+        .formula-box {
+            background: #eef2f7;
+            border: 2px dashed var(--chartres-blue);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--chartres-blue);
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .btn {
+            background: var(--crust-brown);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--chartres-blue); transform: translateY(-2px); }
+
+        .quiz-box { background: #f0f4f8; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option:hover { border-color: var(--bakery-gold); background: #fffcf0; }
+        .correct { background: var(--success) !important; color: white; border-color: var(--success) !important; }
+        .wrong { background: var(--error) !important; color: white; border-color: var(--error) !important; opacity: 0.8; pointer-events: none; }
+
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        
+        ul { padding-left: 25px; }
+        li { margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="credit-header">Création : Emmanuel Boutée</div>
+    
+    <header>
+        <div class="location-label">⛪ Académie des Maîtres Boulangers - Chartres</div>
+        <h1>Chapitre 4 : La Rentabilité et le Compte de Résultat</h1>
+    </header>
+
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- Écran 1 : Définition -->
+    <div id="screen-definition" class="screen active">
+        <h2>1. Le Film de votre Performance</h2>
+        <div class="lesson-text">
+            <p>Si le bilan est une photographie de votre patrimoine, le compte de résultat est le <strong>film</strong> de votre activité sur une année entière [1]. Il a pour but de déterminer si votre boulangerie a dégagé un bénéfice ou un déficit [1].</p>
+            <p>Ce document est une source de données précieuse pour comprendre comment votre résultat s'est formé : est-ce grâce à la croissance de vos ventes place des Épars ou grâce à la réduction de vos coûts de production ? [1]</p>
+            <div class="formula-box">Résultat = Produits – Charges</div>
+            <p>L'équation est implacable : si la somme de vos revenus est supérieure à celle de vos dépenses, vous êtes rentable [2].</p>
+        </div>
+        <button class="btn" onclick="goToStep('charges', 33)">Analyser les Charges du Fournil ➡️</button>
+    </div>
+
+    <!-- Écran 2 : Les Charges -->
+    <div id="screen-charges" class="screen">
+        <h2>2. Les Charges : Vos Engagements</h2>
+        <div class="lesson-text">
+            <p>Les <strong>charges</strong> sont tous les engagements de dépenses et achats qui concourent à diminuer le résultat de votre boulangerie [2]. Dans votre comptabilité, elles commencent toutes par le chiffre 6 [3].</p>
+            <p>Pour votre fournil à Chartres, les charges courantes sont :</p>
+            <ul>
+                <li><strong>Achats de matières premières :</strong> La farine de Beauce, le sel et la levure nécessaires à la pâte [3].</li>
+                <li><strong>Fournitures non stockables :</strong> L'eau et l'énergie (gaz ou électricité) indispensables pour chauffer votre four à sole [3].</li>
+                <li><strong>Services extérieurs :</strong> Votre loyer, vos primes d'assurances et les honoraires de votre expert-comptable [3].</li>
+                <li><strong>Charges de personnel :</strong> Les salaires et cotisations sociales de vos apprentis et vendeurs [3].</li>
+            </ul>
+        </div>
+        <button class="btn" onclick="goToStep('produits', 66)">Découvrir vos Produits ➡️</button>
+    </div>
+
+    <!-- Écran 3 : Les Produits -->
+    <div id="screen-produits" class="screen">
+        <h2>3. Les Produits : Vos Revenus</h2>
+        <div class="lesson-text">
+            <p>Les <strong>produits</strong> sont vos ventes et toutes les opérations amenant un profit propre à accroître votre bénéfice [4]. Ils commencent tous par le chiffre 7 dans votre plan comptable [4].</p>
+            <p>Ils se répartissent principalement en :</p>
+            <ul>
+                <li><strong>Ventes de produits finis :</strong> Le fruit de votre travail quotidien, comme les baguettes de tradition, les pains spéciaux et les viennoiseries [4].</li>
+                <li><strong>Prestations de services :</strong> Si vous proposez une activité de traiteur pour des événements locaux à Chartres [4].</li>
+                <li><strong>Ventes de marchandises :</strong> Si vous revendez des boissons fraîches ou des produits du terroir sans les transformer [4].</li>
+            </ul>
+            <p>Comprendre l'équilibre entre ces produits et vos charges est la clé pour optimiser votre gestion et assurer l'avenir de votre entreprise [5].</p>
+        </div>
+        <button class="btn" onclick="startQuiz()">Passer l'Examen de Rentabilité 🥐</button>
+    </div>
+
+    <!-- Écran 4 : Quiz -->
+    <div id="screen-quiz" class="screen">
+        <h2>Examen de Maîtrise : Chapitre 4</h2>
+        <div id="quiz-area" class="quiz-box"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div id="screen-end" class="screen">
+        <div class="lesson-text" style="text-align: center; border-color: var(--success);">
+            <div style="font-size: 5rem;">🏆🥖</div>
+            <h2>Rentabilité Validée !</h2>
+            <p>Félicitations, Chef ! Vous maîtrisez désormais la structure du compte de résultat. Emmanuel Boutée vous confirme que vous avez les outils pour mesurer la performance réelle de votre fournil.</p>
+            <button class="btn" onclick="location.reload()">Revoir la Leçon</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- MOTEUR SENSORIEL (SON ET VIBRATIONS) ---
+    function playFeedback(isCorrect) {
+        if ("vibrate" in navigator) {
+            if (isCorrect) {
+                navigator.vibrate([100, 50, 100]); 
+            } else {
+                navigator.vibrate([400]); 
+            }
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (isCorrect) {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+            oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.1); 
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.4);
+        } else {
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    // --- NAVIGATION ---
+    function goToStep(id, prog) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('progress-fill').style.width = prog + '%';
+        window.scrollTo(0,0);
+    }
+
+    // --- DONNÉES DU QUIZ ---
+    const quizData = [
+        {
+            q: "Quelle est la fonction principale du Compte de Résultat ?",
+            o: [
+                "Lister les machines possédées par la boulangerie",
+                "Déterminer le bénéfice ou le déficit sur une année",
+                "Calculer la valeur des murs de la boutique",
+                "Recenser les factures que les clients doivent payer"
+            ],
+            c: 1,
+            f: "Correct ! Il mesure la performance économique (rentabilité) sur l'exercice [1]."
+        },
+        {
+            q: "Dans quelle catégorie comptable enregistrez-vous l'électricité pour votre four ?",
+            o: [
+                "Dans les Produits (Classe 7)",
+                "Dans les Immobilisations (Classe 2)",
+                "Dans les Charges (Classe 6)",
+                "Dans les Capitaux propres (Classe 1)"
+            ],
+            c: 2,
+            f: "Exact ! C'est une dépense nécessaire à la production, donc une charge [3]."
+        },
+        {
+            q: "Quelle est l'équation fondamentale pour calculer votre résultat ?",
+            o: [
+                "Résultat = Produits – Charges",
+                "Résultat = Actif + Passif",
+                "Résultat = Stocks + Trésorerie",
+                "Résultat = Ventes / Nombre d'employés"
+            ],
+            c: 0,
+            f: "Bravo ! C'est la différence entre vos revenus et vos dépenses [2]."
+        },
+        {
+            q: "À Chartres, vos ventes de pains de tradition sont considérées comme :",
+            o: [
+                "Des charges exceptionnelles",
+                "Des produits (ventes de produits finis)",
+                "Des dettes fournisseurs",
+                "Des immobilisations financières"
+            ],
+            c: 1,
+            f: "C'est juste ! C'est l'activité principale de votre production de biens [4]."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        loadQuestion();
+        goToStep('quiz', 85);
+    }
+
+    function loadQuestion() {
+        const area = document.getElementById('quiz-area');
+        const data = quizData[currentQuestionIndex];
+        
+        // CORRECTION ICI : Le bon tableau d'indices
+        let indices = [0, 1, 2, 3];
+        indices.sort(() => Math.random() - 0.5);
+
+        let html = `<h3>Question ${currentQuestionIndex + 1} sur ${quizData.length}</h3>`;
+        html += `<p style="font-size:1.1rem; margin-bottom:20px;"><strong>${data.q}</strong></p>`;
+        
+        indices.forEach(idx => {
+            html += `<div class="option" onclick="checkAnswer(${idx}, this)">${data.o[idx]}</div>`;
+        });
+        
+        html += `<div id="q-feedback" class="feedback"></div>`;
+        html += `<button id="q-next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Question Suivante ➡️</button>`;
+        
+        area.innerHTML = html;
+    }
+
+    function checkAnswer(selectedIdx, element) {
+        const data = quizData[currentQuestionIndex];
+        const fb = document.getElementById('q-feedback');
+        const nextBtn = document.getElementById('q-next-btn');
+
+        if (selectedIdx === data.c) {
+            playFeedback(true); // Vibration et son positifs
+            element.classList.add('correct');
+            fb.innerHTML = "✅ " + data.f;
+            fb.style.color = "var(--success)";
+            fb.style.display = "block";
+            nextBtn.style.display = "block";
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+        } else {
+            playFeedback(false); // Vibration et son négatifs
+            element.classList.add('wrong');
+            fb.innerHTML = "❌ Mauvaise fournée... Réfléchissez bien et trouvez la réponse exacte !";
+            fb.style.color = "var(--error)";
+            fb.style.display = "block";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            goToStep('end', 100);
+            playFeedback(true); // Son de victoire final
+        }
+    }
+</script>
+</body>
+</html>

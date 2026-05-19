@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Emmanuel Boutée : Chapitre 6 - La CAF</title>
+    <style>
+        :root {
+            --chartres-blue: #0047AB;
+            --bakery-gold: #DAA520;
+            --crust-brown: #5D2E0B;
+            --flour-white: #FCF9F2;
+            --success: #2E7D32;
+            --error: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--flour-white);
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--chartres-blue);
+        }
+
+        .credit-header {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--crust-brown);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--flour-white);
+            padding-bottom: 10px;
+        }
+
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--crust-brown); font-size: 1.6rem; margin: 5px 0; }
+        .location-label { color: var(--chartres-blue); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bakery-gold), var(--chartres-blue));
+            transition: width 0.5s ease;
+        }
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lesson-text {
+            background: #fffdf5;
+            border-left: 6px solid var(--bakery-gold);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        h2 { color: var(--chartres-blue); font-size: 1.4rem; border-bottom: 2px solid var(--bakery-gold); padding-bottom: 5px; margin-top: 0; }
+        h3 { color: var(--crust-brown); font-size: 1.2rem; margin-top: 25px; }
+
+        .formula-box {
+            background: #eef2f7;
+            border: 2px dashed var(--chartres-blue);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--chartres-blue);
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .btn {
+            background: var(--crust-brown);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--chartres-blue); transform: translateY(-2px); }
+
+        .quiz-box { background: #f0f4f8; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option:hover { border-color: var(--bakery-gold); background: #fffcf0; }
+        .correct { background: var(--success) !important; color: white; border-color: var(--success) !important; }
+        .wrong { background: var(--error) !important; color: white; border-color: var(--error) !important; opacity: 0.8; pointer-events: none; }
+
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        
+        ul { padding-left: 25px; }
+        li { margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="credit-header">Création : Emmanuel Boutée</div>
+    
+    <header>
+        <div class="location-label">⛪ Académie des Maîtres Boulangers - Chartres</div>
+        <h1>Chapitre 6 : La Capacité d'Autofinancement</h1>
+    </header>
+
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- Écran 1 : Introduction -->
+    <div id="screen-intro" class="screen active">
+        <h2>1. Le levain de votre trésorerie</h2>
+        <div class="lesson-text">
+            <p>La CAF n'est pas un solde intermédiaire de gestion, mais une ressource vitale consécutive au résultat net [1].</p>
+            <p>Imaginez que c'est le <strong>"levain"</strong> qui permet à votre pâte de lever pour les fournées futures. Elle représente la capacité réelle de votre boulangerie à générer des fonds par son activité habituelle [2].</p>
+        </div>
+        <button class="btn" onclick="goToStep('exceptions', 33)">Attention aux grumeaux ! ➡️</button>
+    </div>
+
+    <!-- Écran 2 : Les Exceptions -->
+    <div id="screen-exceptions" class="screen">
+        <h2>2. Attention aux grumeaux !</h2>
+        <div class="lesson-text">
+            <p>Toutes les charges ne sont pas des sorties d'argent immédiates. Pour calculer la CAF, on exclut les éléments qui ne sont pas <strong>"monétaires"</strong> [3] :</p>
+            <ul>
+                <li><strong>Les amortissements :</strong> l'usure calculée des machines (four, pétrin), mais ce n'est pas du cash qui sort [2].</li>
+                <li><strong>Les provisions :</strong> des réserves comptables pour des risques probables [2].</li>
+            </ul>
+            <p>Le but est de voir ce qu'il reste vraiment dans le tiroir-caisse une fois le travail fini [4].</p>
+        </div>
+        <button class="btn" onclick="goToStep('methode', 66)">La recette de la CAF ➡️</button>
+    </div>
+
+    <!-- Écran 3 : La Méthode -->
+    <div id="screen-methode" class="screen">
+        <h2>3. La recette de la CAF</h2>
+        <div class="lesson-text">
+            <p>Il existe deux méthodes de calcul. La plus courante (méthode soustractive) part du <strong>Résultat Net</strong> [5].</p>
+            <div class="formula-box">CAF = Résultat Net + Dotations aux Amortissements - Reprises</div>
+            <p>Une fois les dividendes versés aux associés, ce qui reste est <strong>l'autofinancement</strong> [6]. C'est ce qui permet d'acheter vos futurs sacs de farine de Beauce ou un nouveau véhicule de livraison sans avoir besoin d'emprunter [1].</p>
+        </div>
+        <button class="btn" onclick="startQuiz()">L'examen du Maître 🥐</button>
+    </div>
+
+    <!-- Écran Quiz -->
+    <div id="screen-quiz" class="screen">
+        <h2>Examen de Maîtrise : Chapitre 6</h2>
+        <div id="quiz-area" class="quiz-box"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div id="screen-end" class="screen">
+        <div class="lesson-text" style="text-align: center; border-color: var(--success);">
+            <div style="font-size: 5rem;">🏆🥨</div>
+            <h2>Maîtrise Validée !</h2>
+            <p>Félicitations, Chef ! Vous avez validé vos connaissances sur la Capacité d'Autofinancement. Votre structure financière est aussi solide que la pierre de la Cathédrale de Chartres.</p>
+            <p>Emmanuel Boutée vous confirme que vous êtes paré pour piloter votre trésorerie.</p>
+            <button class="btn" onclick="location.reload()">Recommencer la fournée</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- MOTEUR SENSORIEL (SON ET VIBRATIONS) ---
+    function playFeedback(isCorrect) {
+        if ("vibrate" in navigator) {
+            if (isCorrect) {
+                navigator.vibrate([100, 50, 100]); 
+            } else {
+                navigator.vibrate([400]); 
+            }
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (isCorrect) {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+            oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.1); 
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.4);
+        } else {
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    // --- NAVIGATION ---
+    function goToStep(id, prog) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('progress-fill').style.width = prog + '%';
+        window.scrollTo(0,0);
+    }
+
+    // --- DONNÉES DU QUIZ ---
+    const quizData = [
+        {
+            q: "Pourquoi exclut-on les amortissements du calcul de la CAF ?",
+            o: [
+                "Parce qu'ils n'engendrent pas de décaissement immédiat",
+                "Parce qu'ils coûtent trop cher au meunier",
+                "Parce qu'ils sont interdits à Chartres",
+                "Parce qu'ils augmentent les ventes de pain"
+            ],
+            c: 0,
+            f: "Correct ! L'amortissement est une écriture comptable, l'argent reste en banque."
+        },
+        {
+            q: "Quelle est la formule simplifiée de l'autofinancement ?",
+            o: [
+                "CAF - Dividendes",
+                "Ventes + Farine",
+                "Résultat Net / 2",
+                "Emprunts + Capital"
+            ],
+            c: 0,
+            f: "Exact ! C'est ce qu'on garde dans l'entreprise après avoir rémunéré les actionnaires."
+        },
+        {
+            q: "D'où part la méthode 'soustractive' pour calculer la CAF ?",
+            o: [
+                "Du Résultat Net",
+                "De l'Excédent Brut d'Exploitation",
+                "Du stock de farine",
+                "Du prix de la baguette"
+            ],
+            c: 0,
+            f: "Bravo ! On repart du bénéfice final pour remonter aux flux réels."
+        },
+        {
+            q: "À quoi sert principalement la CAF ?",
+            o: [
+                "À financer les investissements futurs",
+                "À décorer la vitrine de la boutique",
+                "À calculer le nombre de clients",
+                "À réduire la qualité de la croûte"
+            ],
+            c: 0,
+            f: "Correct ! C'est votre assurance pour l'avenir et le développement."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        loadQuestion();
+        goToStep('quiz', 85);
+    }
+
+    function loadQuestion() {
+        const area = document.getElementById('quiz-area');
+        const data = quizData[currentQuestionIndex];
+        
+        let indices = [0, 1, 2, 3];
+        indices.sort(() => Math.random() - 0.5);
+
+        let html = `<h3>Question ${currentQuestionIndex + 1} sur ${quizData.length}</h3>`;
+        html += `<p style="font-size:1.1rem; margin-bottom:20px;"><strong>${data.q}</strong></p>`;
+        
+        indices.forEach(idx => {
+            html += `<div class="option" onclick="checkAnswer(${idx}, this)">${data.o[idx]}</div>`;
+        });
+        
+        html += `<div id="q-feedback" class="feedback"></div>`;
+        html += `<button id="q-next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Passer à la suite ➡️</button>`;
+        
+        area.innerHTML = html;
+    }
+
+    function checkAnswer(selectedIdx, element) {
+        const data = quizData[currentQuestionIndex];
+        const fb = document.getElementById('q-feedback');
+        const nextBtn = document.getElementById('q-next-btn');
+
+        if (selectedIdx === data.c) {
+            playFeedback(true);
+            element.classList.add('correct');
+            fb.innerHTML = "✅ " + data.f;
+            fb.style.color = "var(--success)";
+            fb.style.display = "block";
+            nextBtn.style.display = "block";
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+        } else {
+            playFeedback(false);
+            element.classList.add('wrong');
+            fb.innerHTML = "❌ Mauvais pétrissage... Réfléchissez et cherchez la bonne réponse !";
+            fb.style.color = "var(--error)";
+            fb.style.display = "block";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            goToStep('end', 100);
+            playFeedback(true);
+        }
+    }
+</script>
+</body>
+</html>

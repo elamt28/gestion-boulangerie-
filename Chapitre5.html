@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Emmanuel Boutée : Chapitre 5 - Les SIG</title>
+    <style>
+        :root {
+            --chartres-blue: #0047AB;
+            --bakery-gold: #DAA520;
+            --crust-brown: #5D2E0B;
+            --flour-white: #FCF9F2;
+            --success: #2E7D32;
+            --error: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--flour-white);
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--chartres-blue);
+        }
+
+        .credit-header {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--crust-brown);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--flour-white);
+            padding-bottom: 10px;
+        }
+
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--crust-brown); font-size: 1.6rem; margin: 5px 0; }
+        .location-label { color: var(--chartres-blue); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bakery-gold), var(--chartres-blue));
+            transition: width 0.5s ease;
+        }
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lesson-text {
+            background: #fffdf5;
+            border-left: 6px solid var(--bakery-gold);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        h2 { color: var(--chartres-blue); font-size: 1.4rem; border-bottom: 2px solid var(--bakery-gold); padding-bottom: 5px; margin-top: 0; }
+        h3 { color: var(--crust-brown); font-size: 1.2rem; margin-top: 25px; }
+
+        .formula-box {
+            background: #eef2f7;
+            border: 2px dashed var(--chartres-blue);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--chartres-blue);
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .btn {
+            background: var(--crust-brown);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--chartres-blue); transform: translateY(-2px); }
+
+        .quiz-box { background: #f0f4f8; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option:hover { border-color: var(--bakery-gold); background: #fffcf0; }
+        .correct { background: var(--success) !important; color: white; border-color: var(--success) !important; }
+        .wrong { background: var(--error) !important; color: white; border-color: var(--error) !important; opacity: 0.8; pointer-events: none; }
+
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        
+        ul { padding-left: 25px; }
+        li { margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="credit-header">Création : Emmanuel Boutée</div>
+    
+    <header>
+        <div class="location-label">⛪ Académie des Maîtres Boulangers - Chartres</div>
+        <h1>Chapitre 5 : L'Escalier de la Rentabilité (SIG)</h1>
+    </header>
+
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- Écran 1 : Concept des SIG -->
+    <div id="screen-intro" class="screen active">
+        <h2>1. Pourquoi décomposer le Résultat ?</h2>
+        <div class="lesson-text">
+            <p>Connaître votre bénéfice net est indispensable, mais cela ne suffit pas pour piloter votre fournil. Les <strong>Soldes Intermédiaires de Gestion</strong> sont des étapes d'analyse qui permettent de comprendre comment ce résultat s'est formé.</p>
+            <p>Imaginez un escalier : chaque marche est un niveau de profit. Si le résultat final est mauvais, l'analyse des SIG vous indiquera précisément à quel étage se situe le problème : est-ce un manque de ventes place des Épars, un coût trop élevé de la farine de Beauce, ou un excès de charges de personnel ?</p>
+        </div>
+        <button class="btn" onclick="goToStep('marge', 20)">Analyser Marge et Production ➡️</button>
+    </div>
+
+    <!-- Écran 2 : Marge et Production -->
+    <div id="screen-marge" class="screen">
+        <h2>2. Marge Commerciale et Production</h2>
+        <div class="lesson-text">
+            <p>Dans votre métier à Chartres, vous avez souvent deux activités mêlées :</p>
+            <ul>
+                <li><strong>La Marge Commerciale :</strong> Elle concerne l'activité de négoce, c'est-à-dire la revente de produits sans transformation, comme les boissons fraîches ou les confitures du terroir.</li>
+                <li><strong>La Production de l'exercice :</strong> C'est le cœur de votre métier. Elle représente tout ce que vous avez créé, comme votre pain de tradition et vos viennoiseries.</li>
+            </ul>
+            <div class="formula-box">Production = Ventes de produits finis + Variation des stocks</div>
+            <p>L'optimisation de ces deux soldes est le premier levier pour accroître vos profits futurs.</p>
+        </div>
+        <button class="btn" onclick="goToStep('va', 40)">Découvrir la Valeur Ajoutée ➡️</button>
+    </div>
+
+    <!-- Écran 3 : Valeur Ajoutée -->
+    <div id="screen-va" class="screen">
+        <h2>3. La Valeur Ajoutée (La Richesse Créée)</h2>
+        <div class="lesson-text">
+            <p>La <strong>Valeur Ajoutée</strong> représente la richesse réelle créée par votre travail au fournil. C'est la différence entre ce que vous avez produit et ce que vous avez consommé auprès de tiers.</p>
+            <div class="formula-box">Valeur Ajoutée = (Marge + Production) – Charges Externes</div>
+            <p>Cette richesse est ensuite distribuée à quatre acteurs essentiels :</p>
+            <ul>
+                <li><strong>Les Salariés :</strong> Pour leurs salaires et les cotisations sociales.</li>
+                <li><strong>L'État :</strong> Pour le paiement des impôts et taxes.</li>
+                <li><strong>Les Banques :</strong> Pour le paiement des intérêts de vos emprunts.</li>
+                <li><strong>Les Actionnaires :</strong> Pour la distribution des dividendes.</li>
+            </ul>
+        </div>
+        <button class="btn" onclick="goToStep('ebe', 60)">Mesurer la Performance (EBE) ➡️</button>
+    </div>
+
+    <!-- Écran 4 : EBE et REX -->
+    <div id="screen-ebe" class="screen">
+        <h2>4. L'Excédent Brut d'Exploitation (EBE)</h2>
+        <div class="lesson-text">
+            <p>L'<strong>EBE</strong> est sans doute l'indicateur le plus important pour le chef d'entreprise. Il représente le souffle financier de votre métier avant l'impact de vos choix de financement ou du fisc.</p>
+            <p>Il montre la performance économique brute de votre boulangerie chartraine. Un EBE négatif, aussi appelé insuffisance brute, signifierait que votre activité perd de l'argent avant même d'avoir payé vos emprunts ou vos impôts.</p>
+            <p>Vient ensuite le <strong>Résultat d'Exploitation</strong>, qui retire de l'EBE l'usure de votre matériel par le biais des dotations aux amortissements.</p>
+        </div>
+        <button class="btn" onclick="goToStep('final', 80)">Le Résultat Net Final ➡️</button>
+    </div>
+
+    <!-- Écran 5 : Le Résultat Net -->
+    <div id="screen-final" class="screen">
+        <h2>5. RCAI et Résultat de l'exercice</h2>
+        <div class="lesson-text">
+            <p>Nous arrivons au sommet de l'escalier. Le <strong>Résultat Courant Avant Impôts</strong> combine votre performance métier et vos charges financières. C'est l'image fidèle de la rentabilité habituelle de votre entreprise.</p>
+            <p>Enfin, le <strong>Résultat de l'exercice</strong> est le bénéfice ou la perte finale, une fois intégrés les événements exceptionnels et l'impôt sur les sociétés.</p>
+            <p>Ce bénéfice net pourra alors être soit distribué aux associés, soit conservé dans l'entreprise sous forme de réserves pour renforcer votre <strong>capacité d'autofinancement</strong> et assurer vos investissements futurs.</p>
+        </div>
+        <button class="btn" onclick="startQuiz()">Passer l'Examen de Maîtrise SIG 🥐</button>
+    </div>
+
+    <!-- Écran Quiz -->
+    <div id="screen-quiz" class="screen">
+        <h2>Examen de Maîtrise : Chapitre 5</h2>
+        <div id="quiz-area" class="quiz-box"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div id="screen-end" class="screen">
+        <div class="lesson-text" style="text-align: center; border-color: var(--success);">
+            <div style="font-size: 5rem;">🏆🎓</div>
+            <h2>Félicitations, Maître Boulanger !</h2>
+            <p>Vous avez validé avec succès l'ensemble du parcours de gestion financière. Emmanuel Boutée vous confirme que vous possédez désormais toutes les clés pour faire prospérer votre future entreprise à Chartres.</p>
+            <button class="btn" onclick="location.reload()">Revoir la formation</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- MOTEUR SENSORIEL (SON ET VIBRATIONS) ---
+    function playFeedback(isCorrect) {
+        if ("vibrate" in navigator) {
+            if (isCorrect) {
+                navigator.vibrate([100, 50, 100]); 
+            } else {
+                navigator.vibrate([400]); 
+            }
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (isCorrect) {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+            oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.1); 
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.4);
+        } else {
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    // --- NAVIGATION ---
+    function goToStep(id, prog) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('progress-fill').style.width = prog + '%';
+        window.scrollTo(0,0);
+    }
+
+    // --- DONNÉES DU QUIZ ---
+    const quizData = [
+        {
+            q: "Quelle est l'utilité principale des Soldes Intermédiaires de Gestion ?",
+            o: [
+                "Lister l'ensemble des clients de la boulangerie",
+                "Comprendre comment le résultat net s'est constitué étape par étape",
+                "Calculer uniquement la TVA à reverser à l'État",
+                "Établir le planning de production des apprentis"
+            ],
+            c: 1,
+            f: "Correct ! Ils permettent de décomposer la rentabilité pour mieux l'analyser."
+        },
+        {
+            q: "Dans votre fournil, à quoi correspond la 'Production de l'exercice' ?",
+            o: [
+                "À la revente de boissons fraîches achetées à un grossiste",
+                "À la valeur des baguettes et viennoiseries que vous avez fabriquées",
+                "Au montant total de votre apport personnel au capital",
+                "À la facture d'électricité pour chauffer le four à sole"
+            ],
+            c: 1,
+            f: "Exact ! C'est la valeur des biens créés par votre activité de transformation."
+        },
+        {
+            q: "Parmi ces propositions, laquelle la Valeur Ajoutée doit-elle rémunérer ?",
+            o: [
+                "Uniquement le meunier fournisseur de farine",
+                "Les salariés, l'État, les banques et les actionnaires",
+                "Seulement les clients qui ont payé au comptant",
+                "Le montant total des stocks restants en fin d'année"
+            ],
+            c: 1,
+            f: "Bravo ! La VA est la richesse brute distribuée aux partenaires de l'entreprise."
+        },
+        {
+            q: "Que signifie un Excédent Brut d'Exploitation (EBE) négatif ?",
+            o: [
+                "Que vous avez trop de clients dans la boutique",
+                "Que votre métier consomme plus d'argent qu'il n'en génère",
+                "Que vous n'avez plus besoin de payer d'impôts",
+                "Que votre stock de farine est trop important"
+            ],
+            c: 1,
+            f: "C'est juste ! C'est une alerte grave sur la rentabilité de votre exploitation."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        loadQuestion();
+        goToStep('quiz', 90);
+    }
+
+    function loadQuestion() {
+        const area = document.getElementById('quiz-area');
+        const data = quizData[currentQuestionIndex];
+        
+        // CORRECTION ICI : Le bon dosage pour les indices
+        let indices = [0, 1, 2, 3];
+        indices.sort(() => Math.random() - 0.5);
+
+        let html = `<h3>Question ${currentQuestionIndex + 1} sur ${quizData.length}</h3>`;
+        html += `<p style="font-size:1.1rem; margin-bottom:20px;"><strong>${data.q}</strong></p>`;
+        
+        indices.forEach(idx => {
+            html += `<div class="option" onclick="checkAnswer(${idx}, this)">${data.o[idx]}</div>`;
+        });
+        
+        html += `<div id="q-feedback" class="feedback"></div>`;
+        html += `<button id="q-next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Passer à la suite ➡️</button>`;
+        
+        area.innerHTML = html;
+    }
+
+    function checkAnswer(selectedIdx, element) {
+        const data = quizData[currentQuestionIndex];
+        const fb = document.getElementById('q-feedback');
+        const nextBtn = document.getElementById('q-next-btn');
+
+        if (selectedIdx === data.c) {
+            playFeedback(true); // Vibration et son positifs
+            element.classList.add('correct');
+            fb.innerHTML = "✅ " + data.f;
+            fb.style.color = "var(--success)";
+            fb.style.display = "block";
+            nextBtn.style.display = "block";
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+        } else {
+            playFeedback(false); // Vibration et son négatifs
+            element.classList.add('wrong');
+            fb.innerHTML = "❌ Mauvais dosage... Cherchez la bonne réponse pour valider votre maîtrise !";
+            fb.style.color = "var(--error)";
+            fb.style.display = "block";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            goToStep('end', 100);
+            playFeedback(true); // Son de victoire final
+        }
+    }
+</script>
+</body>
+</html>

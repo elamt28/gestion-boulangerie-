@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maître Boulanger : Pilote de Gestion - Chartres</title>
+    <style>
+        :root {
+            --bread-crust: #8B4513;
+            --bread-flour: #F5F5DC;
+            --chartres-blue: #0047AB;
+            --success-green: #2E7D32;
+            --accent-gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bread-flour);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 8px solid var(--chartres-blue);
+            position: relative;
+        }
+
+        .creation-credit {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--bread-crust);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        h1 {
+            color: var(--bread-crust);
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--chartres-blue);
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .lesson-card {
+            background: #fff;
+            border-left: 5px solid var(--accent-gold);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background-color: var(--bread-crust);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.3s;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .btn:active { transform: scale(0.95); }
+        .btn:hover { background-color: #5D2E0B; }
+
+        .quiz-section {
+            display: none;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #ccc;
+        }
+
+        .question {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--bread-crust);
+        }
+
+        .option {
+            display: block;
+            background: #f9f9f9;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover { background: #eee; }
+        .correct { background-color: var(--success-green) !important; color: white; }
+        .incorrect { background-color: #d32f2f !important; color: white; }
+
+        .feedback {
+            margin-top: 10px;
+            font-style: italic;
+            display: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        #progress {
+            width: 0%;
+            height: 100%;
+            background: var(--accent-gold);
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+
+        .icon-box { text-align: center; font-size: 2.5rem; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Mention demandée sur la première page -->
+        <div class="creation-credit">Création : Emmanuel Boutee</div>
+        
+        <div class="icon-box">🥖⛪</div>
+        <h1>Maître Boulanger : Pilote de Gestion</h1>
+        <p class="subtitle">Scénario : Votre future Boulangerie face à la Cathédrale de Chartres</p>
+
+        <div class="progress-bar"><div id="progress"></div></div>
+
+        <!-- Étape 1 -->
+        <div id="step1" class="step">
+            <div class="lesson-card">
+                <strong>1. Votre ADN Financier :</strong> Tout comme la flèche de la Cathédrale de Chartres est unique au monde, votre entreprise possède son propre **ADN financier** souligné par son bilan [1]. En tant que boulanger, vous n'êtes pas un simple négociant (comme le kiosque de la place des Épars qui revend sans transformer), vous dirigez une **activité de production de biens** [2]. Vous transformez la farine de Beauce (matière première) en pains dorés (produits finis) [2, 3].
+            </div>
+            <button class="btn" onclick="nextStep(2)">Compris ! Étape suivante</button>
+        </div>
+
+        <!-- Étape 2 -->
+        <div id="step2" class="step" style="display:none;">
+            <div class="lesson-card">
+                <strong>2. Le Cycle d'Exploitation :</strong> C'est la "roue du moulin" de votre activité [4]. 
+                <ul>
+                    <li>**Achats** (Farine, levure) ➡️ **Décaissements**</li>
+                    <li>**Production** (Pétrissage, cuisson au fournil)</li>
+                    <li>**Ventes** (Boutique et livraisons)</li>
+                    <li>**Encaissements** (Caisse et factures payées) ➡️ **Trésorerie**</li>
+                </ul>
+                Le **carburant** indispensable pour faire tourner ce cycle, c'est votre trésorerie [5].
+            </div>
+            <button class="btn" onclick="nextStep(3)">Je pilote mon cycle !</button>
+        </div>
+
+        <!-- Étape 3 -->
+        <div id="step3" class="step" style="display:none;">
+            <div class="lesson-card">
+                <strong>3. Rentabilité vs Solvabilité :</strong> Le secret de la survie [6].
+                <ul>
+                    <li>**Rentabilité :** Votre fournil dégage des bénéfices (Ventes > Charges).</li>
+                    <li>**Solvabilité :** Vous avez assez d'argent disponible pour payer votre meunier, vos apprentis et l'Urssaf à temps [6].</li>
+                </ul>
+                <em>Attention :</em> Une boulangerie peut être rentable (faire du bénéfice) mais faire faillite car elle n'est plus solvable (manque de cash immédiat) [7].
+            </div>
+            <button class="btn" onclick="startQuiz()">Passer l'Examen de Maîtrise</button>
+        </div>
+
+        <!-- Quiz interactif -->
+        <div id="quiz" class="quiz-section">
+            <div class="question" id="qText"></div>
+            <div id="options"></div>
+            <div id="feedback" class="feedback"></div>
+            <button id="nextQ" class="btn" style="display:none;" onclick="loadQuestion()">Question suivante</button>
+        </div>
+    </div>
+
+    <script>
+        // --- AUDIO ENGINE ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(freq, type) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type || 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.2);
+        }
+
+        function clickSound() { playSound(440, 'triangle'); }
+        function successSound() { playSound(880, 'sine'); playSound(1100, 'sine'); }
+        function errorSound() { playSound(110, 'sawtooth'); }
+
+        // --- HAPTICS ---
+        function vibrate() { if (navigator.vibrate) navigator.vibrate(50); }
+
+        // --- NAVIGATION ---
+        function nextStep(step) {
+            clickSound();
+            vibrate();
+            document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+            document.getElementById('step' + step).style.display = 'block';
+            document.getElementById('progress').style.width = (step * 25) + '%';
+        }
+
+        // --- QUIZ DATA ---
+        const quizData = [
+            {
+                q: "Pourquoi votre boulangerie à Chartres est-elle unique ?",
+                o: ["Parce qu'elle n'a pas de concurrents", "Parce que son ADN financier (bilan) lui est propre", "Parce qu'elle vend du pain blanc"],
+                c: 1,
+                r: "Exact ! Chaque entreprise est unique de par son ADN financier et ses chiffres comptables [1]."
+            },
+            {
+                q: "Quel élément constitue le 'carburant' de votre cycle d'exploitation ?",
+                o: ["Le four à pain", "Le stock de baguettes", "La trésorerie"],
+                c: 2,
+                r: "C'est ça ! La trésorerie est le carburant qui permet de payer pour produire et vendre [5]."
+            },
+            {
+                q: "Peut-on être rentable (bénéficiaire) mais risquer la faillite ?",
+                o: ["Oui, si l'on n'est plus solvable (manque de trésorerie)", "Non, le bénéfice garantit tout", "C'est impossible en comptabilité"],
+                c: 0,
+                r: "Bien vu. La rentabilité n'empêche pas le risque de cessation de paiement si la trésorerie manque [7]."
+            }
+        ];
+
+        let currentQ = 0;
+
+        function startQuiz() {
+            nextStep(4);
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('progress').style.width = '75%';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQ >= quizData.length) { showFinal(); return; }
+            const data = quizData[currentQ];
+            document.getElementById('qText').innerText = data.q;
+            const optDiv = document.getElementById('options');
+            optDiv.innerHTML = '';
+            data.o.forEach((opt, index) => {
+                const b = document.createElement('div');
+                b.className = 'option';
+                b.innerText = opt;
+                b.onclick = () => checkAnswer(index);
+                optDiv.appendChild(b);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('nextQ').style.display = 'none';
+        }
+
+        function checkAnswer(idx) {
+            const data = quizData[currentQ];
+            const options = document.getElementsByClassName('option');
+            vibrate();
+            if (idx === data.c) {
+                successSound();
+                options[idx].classList.add('correct');
+                document.getElementById('feedback').innerText = "✅ " + data.r;
+                document.getElementById('feedback').style.color = "var(--success-green)";
+            } else {
+                errorSound();
+                options[idx].classList.add('incorrect');
+                document.getElementById('feedback').innerText = "❌ Mauvais dosage... " + data.r;
+                document.getElementById('feedback').style.color = "red";
+            }
+            document.getElementById('feedback').style.display = 'block';
+            document.getElementById('nextQ').style.display = 'block';
+            currentQ++;
+        }
+
+        function showFinal() {
+            successSound();
+            document.getElementById('progress').style.width = '100%';
+            document.querySelector('.container').innerHTML = `
+                <div class="creation-credit">Création : Emmanuel Boutee</div>
+                <div class="icon-box">🏆</div>
+                <h1 style="text-align:center">Maîtrise Validée !</h1>
+                <p style="text-align:center">Bravo futur chef d'entreprise. Le Chapitre 1 est acquis. Vous savez désormais que la gestion est le pilotage de votre réussite à Chartres.</p>
+                <button class="btn" onclick="location.reload()">Recommencer la formation</button>
+            `;
+        }
+    </script>
+</body>
+</html>

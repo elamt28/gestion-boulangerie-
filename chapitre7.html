@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Emmanuel Boutée : Chapitre 7 - Les Investissements</title>
+    <style>
+        :root {
+            --chartres-blue: #0047AB;
+            --bakery-gold: #DAA520;
+            --crust-brown: #5D2E0B;
+            --flour-white: #FCF9F2;
+            --success: #2E7D32;
+            --error: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--flour-white);
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--chartres-blue);
+        }
+
+        .credit-header {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--crust-brown);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--flour-white);
+            padding-bottom: 10px;
+        }
+
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--crust-brown); font-size: 1.6rem; margin: 5px 0; }
+        .location-label { color: var(--chartres-blue); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bakery-gold), var(--chartres-blue));
+            transition: width 0.5s ease;
+        }
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lesson-text {
+            background: #fffdf5;
+            border-left: 6px solid var(--bakery-gold);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        h2 { color: var(--chartres-blue); font-size: 1.4rem; border-bottom: 2px solid var(--bakery-gold); padding-bottom: 5px; margin-top: 0; }
+        h3 { color: var(--crust-brown); font-size: 1.2rem; margin-top: 25px; }
+
+        .formula-box {
+            background: #eef2f7;
+            border: 2px dashed var(--chartres-blue);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--chartres-blue);
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .btn {
+            background: var(--crust-brown);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--chartres-blue); transform: translateY(-2px); }
+
+        .quiz-box { background: #f0f4f8; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option:hover { border-color: var(--bakery-gold); background: #fffcf0; }
+        .correct { background: var(--success) !important; color: white; border-color: var(--success) !important; }
+        .wrong { background: var(--error) !important; color: white; border-color: var(--error) !important; opacity: 0.8; pointer-events: none; }
+
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        
+        ul { padding-left: 25px; }
+        li { margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="credit-header">Création : Emmanuel Boutée</div>
+    
+    <header>
+        <div class="location-label">⛪ Académie des Chefs d'Entreprise - Chartres</div>
+        <h1>Chapitre 7 : Financement des Investissements</h1>
+    </header>
+
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- Écran 1 : Les 3 feux verts -->
+    <div id="screen-intro" class="screen active">
+        <h2>1. Avant d'allumer le four...</h2>
+        <div class="lesson-text">
+            <p>Tout projet d’investissement, qu'il s'agisse d'un nouveau four à sole ou de l'aménagement d'une boutique place des Épars, doit répondre à trois questions vitales :</p>
+            <ul>
+                <li><strong>Est-ce rentable ?</strong> Le projet va-t-il générer un bénéfice net ?</li>
+                <li><strong>Avons-nous les moyens ?</strong> Disposons-nous du capital ou de la capacité d'emprunt ?</li>
+                <li><strong>La trésorerie tiendra-t-elle ?</strong> Le cash sera-t-il suffisant tout au long de la montée en puissance ?</li>
+            </ul>
+            <p>Ne pas vérifier ces trois points, c'est risquer de voir sa croûte brûler avant même que la mie ne soit cuite.</p>
+        </div>
+        <button class="btn" onclick="goToStep('marche', 25)">Analyser le Marché ➡️</button>
+    </div>
+
+    <!-- Écran 2 : Étude de marché -->
+    <div id="screen-marche" class="screen">
+        <h2>2. Le Chiffre d'Affaires Prévisionnel</h2>
+        <div class="lesson-text">
+            <p>Pour ne pas naviguer à vue, le Chef d'entreprise s'appuie sur une étude de marché. À Chartres, cela signifie estimer :</p>
+            <ul>
+                <li>Le nombre de clients potentiels (habitants, touristes de la Cathédrale).</li>
+                <li>Le panier moyen (baguette de tradition, viennoiseries, spécialités à la farine de Beauce).</li>
+                <li>L'évolution prévue (souvent prudente, autour de +5% par an).</li>
+            </ul>
+            <p>C'est la base de votre <strong>chiffre d'affaires prévisionnel</strong>. C'est votre promesse de revenus futurs.</p>
+        </div>
+        <button class="btn" onclick="goToStep('financement', 50)">Calculer les Coûts ➡️</button>
+    </div>
+
+    <!-- Écran 3 : Coûts et Financement -->
+    <div id="screen-financement" class="screen">
+        <h2>3. Le Plan de Financement</h2>
+        <div class="lesson-text">
+            <p>Le plan de financement est la balance de votre projet. Il doit être strictement équilibré :</p>
+            <div class="formula-box">Besoins (Investissements) = Ressources (Financement)</div>
+            <p><strong>Les Besoins :</strong> Frais d'établissement, constructions, machines (pétrins, chambres de pousse) et mobilier.</p>
+            <p><strong>Les Ressources :</strong> Votre apport personnel (autofinancement), les emprunts bancaires et les subventions éventuelles (Région, CFA).</p>
+        </div>
+        <button class="btn" onclick="goToStep('pluriannuel', 75)">Voir sur le Long Terme ➡️</button>
+    </div>
+
+    <!-- Écran 4 : Pluriannuel -->
+    <div id="screen-pluriannuel" class="screen">
+        <h2>4. Le Compte de Résultat Pluriannuel</h2>
+        <div class="lesson-text">
+            <p>Investir, c'est parier sur l'avenir. Le compte de résultat pluriannuel simule l'activité sur 3 ou 5 ans.</p>
+            <p>Il intègre les nouvelles charges :</p>
+            <ul>
+                <li><strong>Les intérêts :</strong> Coût du loyer de l'argent emprunté.</li>
+                <li><strong>Les amortissements :</strong> L'usure comptable de votre nouveau matériel.</li>
+                <li><strong>Les surcoûts :</strong> Électricité du four, nouveaux apprentis, maintenance.</li>
+            </ul>
+            <p>Si le <strong>Résultat Net</strong> est positif chaque année, votre fournée est économiquement saine !</p>
+        </div>
+        <button class="btn" onclick="startQuiz()">L'Examen du Maître 🥐</button>
+    </div>
+
+    <!-- Écran Quiz -->
+    <div id="screen-quiz" class="screen">
+        <h2>Examen de Maîtrise : Chapitre 7</h2>
+        <div id="quiz-area" class="quiz-box"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div id="screen-end" class="screen">
+        <div class="lesson-text" style="text-align: center; border-color: var(--success);">
+            <div style="font-size: 5rem;">🏆🥖</div>
+            <h2>Maîtrise Validée !</h2>
+            <p>Félicitations, Chef ! Le financement des investissements n'a plus de secret pour vous. Votre projet est maintenant aussi solide qu'une miche de pain de campagne bien cuite.</p>
+            <p>Emmanuel Boutée vous confirme que vous êtes prêt à bâtir votre empire.</p>
+            <button class="btn" onclick="location.reload()">Recommencer la formation</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- MOTEUR SENSORIEL (SON ET VIBRATIONS) ---
+    function playFeedback(isCorrect) {
+        if ("vibrate" in navigator) {
+            if (isCorrect) {
+                navigator.vibrate([100, 50, 100]); 
+            } else {
+                navigator.vibrate([400]); 
+            }
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (isCorrect) {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+            oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.1); 
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.4);
+        } else {
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    // --- NAVIGATION COHÉRENTE ---
+    function goToStep(id, prog) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('progress-fill').style.width = prog + '%';
+        window.scrollTo(0,0);
+    }
+
+    // --- DONNÉES DU QUIZ ---
+    const quizData = [
+        {
+            q: "Quels sont les trois critères fondamentaux pour valider un investissement ?",
+            o: [
+                "Rentabilité, Moyens financiers et Trésorerie suffisante",
+                "Couleur du four, Nombre d'amis et Marge brute",
+                "Chiffre d'affaires, Heures de sommeil et TVA",
+                "Loyer, Farine de Beauce et Publicité radio"
+            ],
+            c: 0,
+            f: "Correct ! C'est le trépied de la sécurité financière."
+        },
+        {
+            q: "Que doit-on trouver dans un Plan de Financement ?",
+            o: [
+                "L'équilibre entre les Besoins (achats) et les Ressources (argent)",
+                "La liste des clients qui n'ont pas payé",
+                "Le nom du meunier et le prix du sel",
+                "Uniquement le montant de l'emprunt bancaire"
+            ],
+            c: 0,
+            f: "Exact ! Tout besoin doit avoir sa ressource en face."
+        },
+        {
+            q: "Pourquoi le projet est-il souvent bénéfique pour le BFR en boulangerie ?",
+            o: [
+                "Car les clients payent comptant alors que les charges sont différées",
+                "Car le pain ne coûte rien à produire",
+                "Car les subventions de Chartres sont automatiques",
+                "Car les banques ne demandent jamais d'intérêts"
+            ],
+            c: 0,
+            f: "Bravo ! L'encaissement immédiat est le moteur de votre trésorerie."
+        },
+        {
+            q: "Quelle nouvelle charge apparaît obligatoirement suite à un investissement ?",
+            o: [
+                "Les Dotations aux Amortissements",
+                "Le prix du sac de farine de Beauce",
+                "La taxe sur les enseignes lumineuses",
+                "La commission sur les ventes de croissants"
+            ],
+            c: 0,
+            f: "Correct ! L'amortissement constate l'usure de votre investissement."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        loadQuestion();
+        goToStep('quiz', 90);
+    }
+
+    function loadQuestion() {
+        const area = document.getElementById('quiz-area');
+        const data = quizData[currentQuestionIndex];
+        
+        // CORRECTION ABSOLUE : Le seul dosage qui fonctionne !
+        let indices = [0, 1, 2, 3];
+        indices.sort(() => Math.random() - 0.5);
+
+        let html = `<h3>Question ${currentQuestionIndex + 1} sur ${quizData.length}</h3>`;
+        html += `<p style="font-size:1.1rem; margin-bottom:20px;"><strong>${data.q}</strong></p>`;
+        
+        indices.forEach(idx => {
+            html += `<div class="option" onclick="checkAnswer(${idx}, this)">${data.o[idx]}</div>`;
+        });
+        
+        html += `<div id="q-feedback" class="feedback"></div>`;
+        html += `<button id="q-next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Passer à la suite ➡️</button>`;
+        
+        area.innerHTML = html;
+    }
+
+    function checkAnswer(selectedIdx, element) {
+        const data = quizData[currentQuestionIndex];
+        const fb = document.getElementById('q-feedback');
+        const nextBtn = document.getElementById('q-next-btn');
+
+        if (selectedIdx === data.c) {
+            playFeedback(true);
+            element.classList.add('correct');
+            fb.innerHTML = "✅ " + data.f;
+            fb.style.color = "var(--success)";
+            fb.style.display = "block";
+            nextBtn.style.display = "block";
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+        } else {
+            playFeedback(false);
+            element.classList.add('wrong');
+            fb.innerHTML = "❌ " + (data.errorMsg || "Mauvais pétrissage... Réfléchissez et cherchez la bonne réponse !");
+            fb.style.color = "var(--error)";
+            fb.style.display = "block";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            goToStep('end', 100);
+            playFeedback(true);
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Académie Emmanuel Boutée : Chapitre 3 - Le Bilan Fonctionnel</title>
+    <style>
+        :root {
+            --chartres-blue: #0047AB;
+            --bakery-gold: #DAA520;
+            --crust-brown: #5D2E0B;
+            --flour-white: #FCF9F2;
+            --success: #2E7D32;
+            --error: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--flour-white);
+            color: #333;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--chartres-blue);
+        }
+
+        .credit-header {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--crust-brown);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--flour-white);
+            padding-bottom: 10px;
+        }
+
+        header { text-align: center; margin-bottom: 25px; }
+        h1 { color: var(--crust-brown); font-size: 1.6rem; margin: 5px 0; }
+        .location-label { color: var(--chartres-blue); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--bakery-gold), var(--chartres-blue));
+            transition: width 0.5s ease;
+        }
+
+        .screen { display: none; }
+        .active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lesson-text {
+            background: #fffdf5;
+            border-left: 6px solid var(--bakery-gold);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        h2 { color: var(--chartres-blue); font-size: 1.4rem; border-bottom: 2px solid var(--bakery-gold); padding-bottom: 5px; margin-top: 0; }
+        h3 { color: var(--crust-brown); font-size: 1.2rem; margin-top: 25px; }
+
+        .formula-box {
+            background: #eef2f7;
+            border: 2px dashed var(--chartres-blue);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--chartres-blue);
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .btn {
+            background: var(--crust-brown);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--chartres-blue); transform: translateY(-2px); }
+
+        .quiz-box { background: #f0f4f8; padding: 25px; border-radius: 15px; margin-top: 30px; }
+        
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .option:hover { border-color: var(--bakery-gold); background: #fffcf0; }
+        .correct { background: var(--success) !important; color: white; border-color: var(--success) !important; }
+        .wrong { background: var(--error) !important; color: white; border-color: var(--error) !important; opacity: 0.8; pointer-events: none; }
+
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; text-align: center; }
+        
+        ul { padding-left: 25px; }
+        li { margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="credit-header">Création : Emmanuel Boutée</div>
+    
+    <header>
+        <div class="location-label">⛪ Académie des Maîtres Boulangers - Chartres</div>
+        <h1>Chapitre 3 : Le Diagnostic du Bilan Fonctionnel</h1>
+    </header>
+
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+
+    <!-- Écran 1 : Introduction FR -->
+    <div id="screen-fr" class="screen active">
+        <h2>1. Le Fonds de Roulement</h2>
+        <div class="lesson-text">
+            <p>Le bilan fonctionnel est un outil de diagnostic. Il permet de comprendre comment votre trésorerie est structurée. Le premier pilier est le <strong>Fonds de Roulement</strong>.</p>
+            <p>Il représente votre marge de sécurité à long terme. C'est l'excédent de vos ressources stables sur vos emplois durables.</p>
+            <div class="formula-box">Fonds de Roulement = Ressources Stables - Emplois Stables</div>
+            <p>À Chartres, si vous empruntez pour acheter votre fournil, le Fonds de Roulement est ce qu'il vous reste une fois que le bâtiment et les machines ont été payés. Une entreprise solide doit avoir un Fonds de Roulement positif dès sa création pour assurer ses fondations financières.</p>
+        </div>
+        <button class="btn" onclick="goToStep('bfr', 33)">Analyser l'Exploitation (BFR) ➡️</button>
+    </div>
+
+    <!-- Écran 2 : BFR -->
+    <div id="screen-bfr" class="screen">
+        <h2>2. Le Besoin en Fonds de Roulement</h2>
+        <div class="lesson-text">
+            <p>Le <strong>Besoin en Fonds de Roulement</strong> est l'argent "bloqué" par votre activité quotidienne. Contrairement au Fonds de Roulement qui regarde le long terme, le BFR regarde le cycle court de votre métier.</p>
+            <p>Dans votre fournil, cet argent est immobilisé dans :</p>
+            <ul>
+                <li><strong>Vos Stocks :</strong> Les sacs de farine de Beauce en réserve et les pains en vitrine.</li>
+                <li><strong>Vos Créances :</strong> Les factures que les hôtels chartrains ne vous ont pas encore payées.</li>
+            </ul>
+            <p>Heureusement, vos fournisseurs vous font crédit, ce qui réduit ce besoin. Le BFR est donc la différence entre ce que vous stockez et ce que vous devez à court terme.</p>
+            <div class="formula-box">BFR = Stocks + Créances - Dettes d'Exploitation</div>
+        </div>
+        <button class="btn" onclick="goToStep('treso', 66)">Calculer la Trésorerie Nette ➡️</button>
+    </div>
+
+    <!-- Écran 3 : Trésorerie -->
+    <div id="screen-treso" class="screen">
+        <h2>3. L'Équilibre de la Trésorerie</h2>
+        <div class="lesson-text">
+            <p>La <strong>Trésorerie Nette</strong> est le juge de paix. Elle est le résultat final de l'équilibre entre votre Fonds de Roulement et votre Besoin en Fonds de Roulement.</p>
+            <div class="formula-box">Trésorerie Nette = FR - BFR</div>
+            <p>C'est un système de vases communiquants. Si votre Besoin en Fonds de Roulement augmente trop (par exemple, si vous stockez trop de farine inutilement), votre trésorerie baisse immédiatement.</p>
+            <p>Le but du Maître Boulanger est de maintenir une trésorerie saine pour rester <strong>solvable</strong>, c'est-à-dire capable de payer ses factures et ses apprentis à l'heure.</p>
+        </div>
+        <button class="btn" onclick="startQuiz()">Passer l'Examen de Diagnostic 🥐</button>
+    </div>
+
+    <!-- Écran 4 : Quiz -->
+    <div id="screen-quiz" class="screen">
+        <h2>Examen de Maîtrise : Chapitre 3</h2>
+        <div id="quiz-area" class="quiz-box"></div>
+    </div>
+
+    <!-- Écran Final -->
+    <div id="screen-end" class="screen">
+        <div class="lesson-text" style="text-align: center; border-color: var(--success);">
+            <div style="font-size: 5rem;">🏆🥨</div>
+            <h2>Diagnostic Validé !</h2>
+            <p>Félicitations, Chef ! Vous maîtrisez désormais l'interaction entre le Fonds de Roulement et le Besoin en Fonds de Roulement. Vous avez les clés pour piloter la trésorerie de votre entreprise.</p>
+            <button class="btn" onclick="location.reload()">Recommencer la Leçon</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- MOTEUR SENSORIEL (SON ET VIBRATIONS) ---
+    function playFeedback(isCorrect) {
+        if ("vibrate" in navigator) {
+            if (isCorrect) {
+                navigator.vibrate([100, 50, 100]); 
+            } else {
+                navigator.vibrate([400]); 
+            }
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (isCorrect) {
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+            oscillator.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.1); 
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.4);
+        } else {
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+    }
+
+    // --- NAVIGATION ---
+    function goToStep(id, prog) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + id).classList.add('active');
+        document.getElementById('progress-fill').style.width = prog + '%';
+        window.scrollTo(0,0);
+    }
+
+    // --- DONNÉES DU QUIZ ---
+    const quizData = [
+        {
+            q: "Quelle est la définition du Fonds de Roulement ?",
+            o: [
+                "L'argent liquide disponible dans la caisse le soir",
+                "L'excédent des ressources stables sur les emplois durables",
+                "Le montant total des ventes de baguettes du mois",
+                "La dette due au meunier pour la livraison de farine"
+            ],
+            c: 1,
+            f: "Correct ! C'est votre marge de sécurité financière à long terme."
+        },
+        {
+            q: "Pourquoi le stock de farine augmente-t-il votre BFR ?",
+            o: [
+                "Car il prend de la place dans le fournil",
+                "Car il représente de l'argent bloqué qui n'est pas encore vendu",
+                "Car il permet de faire plus de bénéfices",
+                "Car le prix de la farine de Beauce est stable"
+            ],
+            c: 1,
+            f: "Exact ! Le stock est un emploi d'argent qui pèse sur votre trésorerie."
+        },
+        {
+            q: "Quelle est la 'formule magique' de la trésorerie nette ?",
+            o: [
+                "Trésorerie = FR - BFR",
+                "Trésorerie = Ventes + Stocks",
+                "Trésorerie = Capital + Emprunts",
+                "Trésorerie = Bénéfice / Charges"
+            ],
+            c: 0,
+            f: "Bravo ! Elle dépend directement de l'équilibre entre FR et BFR."
+        },
+        {
+            q: "Que se passe-t-il si votre BFR est supérieur à votre Fonds de Roulement ?",
+            o: [
+                "Vous faites automatiquement plus de bénéfices",
+                "Votre trésorerie devient négative (découvert)",
+                "Le meunier doit vous rembourser la farine",
+                "Vous n'avez plus besoin de payer vos apprentis"
+            ],
+            c: 1,
+            f: "C'est juste ! Si les besoins dépassent les ressources, le cash manque."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        loadQuestion();
+        goToStep('quiz', 85);
+    }
+
+    function loadQuestion() {
+        const area = document.getElementById('quiz-area');
+        const data = quizData[currentQuestionIndex];
+        
+        // CORRECTION DE L'ERREUR NOTEBOOKLM
+        let indices = [0, 1, 2, 3];
+        indices.sort(() => Math.random() - 0.5);
+
+        let html = `<h3>Question ${currentQuestionIndex + 1} sur ${quizData.length}</h3>`;
+        html += `<p style="font-size:1.1rem; margin-bottom:20px;"><strong>${data.q}</strong></p>`;
+        
+        indices.forEach(idx => {
+            html += `<div class="option" onclick="checkAnswer(${idx}, this)">${data.o[idx]}</div>`;
+        });
+        
+        html += `<div id="q-feedback" class="feedback"></div>`;
+        html += `<button id="q-next-btn" class="btn" style="display:none;" onclick="nextQuestion()">Passer à la suite ➡️</button>`;
+        
+        area.innerHTML = html;
+    }
+
+    function checkAnswer(selectedIdx, element) {
+        const data = quizData[currentQuestionIndex];
+        const fb = document.getElementById('q-feedback');
+        const nextBtn = document.getElementById('q-next-btn');
+
+        if (selectedIdx === data.c) {
+            playFeedback(true);
+            element.classList.add('correct');
+            fb.innerHTML = "✅ " + data.f;
+            fb.style.color = "var(--success)";
+            fb.style.display = "block";
+            nextBtn.style.display = "block";
+            // Bloquer les autres options
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+        } else {
+            playFeedback(false);
+            element.classList.add('wrong');
+            fb.innerHTML = "❌ Mauvais mélange... Cherchez la bonne réponse pour débloquer la suite !";
+            fb.style.color = "var(--error)";
+            fb.style.display = "block";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.length) {
+            loadQuestion();
+        } else {
+            goToStep('end', 100);
+            playFeedback(true); // Bonus sonore pour la fin du parcours !
+        }
+    }
+</script>
+</body>
+</html>
